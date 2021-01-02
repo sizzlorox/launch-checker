@@ -1,5 +1,6 @@
 import { useQuery } from 'react-query';
 import { utcToZonedTime, format } from 'date-fns-tz';
+import { withRouter, useHistory } from 'react-router-dom';
 
 const getHeaderImage = (links) => links.length
   ? (
@@ -12,21 +13,22 @@ const formatTimeZone = (utcDate) => {
   return format(zonedDate, 'yyyy-MM-dd HH:mm:ss [OOOO]');
 };
 
-function LaunchInfo() {
-  const { isLoading, error, data } = useQuery('launch', () => fetch('https://api.spacexdata.com/v4/launches/upcoming').then(res => res.json()));
+function LaunchInfo({
+  launchType,
+}) {
+  let history = useHistory();
+  const { isLoading, error, data } = useQuery(`launch-${launchType}`, () => fetch(`https://api.spacexdata.com/v4/launches/${launchType}`).then(res => res.json()));
 
   if (isLoading) return '...';
 
   if (error) return 'Oh shit ' + error;
-
-  console.log(data[0])
 
   return (
     <section class="text-gray-700 body-font">
       <div class="container px-8 mx-auto py-36 lg:px-4">
         <div class="flex flex-wrap text-left">
           {
-            data.map(launchData => (
+            data && data.map(launchData => (
               <div class="px-8 py-6 lg:w-1/3 md:w-full">
                 {getHeaderImage(launchData.links.flickr.original)}
                 <h2 class="mb-3 text-lg font-semibold text-gray-700 lg:text-2xl title-font">
@@ -35,7 +37,7 @@ function LaunchInfo() {
                 <p class="mb-4 text-base leading-relaxed">
                   {launchData.details}
                 </p>
-                <a href="#" class="inline-flex items-center font-semibold text-blue-700 md:mb-2 lg:mb-0 hover:text-blue-400 ">
+                <a href="#" class="inline-flex items-center font-semibold text-blue-700 md:mb-2 lg:mb-0 hover:text-blue-400" onClick={() => history.push(`/launch/${launchData.id}`)}>
                   Read More
                   <svg class="w-4 h-4 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                     <path fill="none" d="M0 0h24v24H0z" />
@@ -50,4 +52,4 @@ function LaunchInfo() {
     </section>
   );
 };
-export default LaunchInfo;
+export default withRouter(LaunchInfo);
