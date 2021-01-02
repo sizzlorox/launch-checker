@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 import { utcToZonedTime, format } from 'date-fns-tz';
-import { withRouter, useHistory } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 const getHeaderImage = (links) => links.length
   ? (
@@ -16,7 +16,6 @@ const formatTimeZone = (utcDate) => {
 function LaunchInfo({
   launchType,
 }) {
-  let history = useHistory();
   const { isLoading, error, data } = useQuery(`launch-${launchType}`, () => fetch(`https://api.spacexdata.com/v4/launches/${launchType}`).then(res => res.json()));
 
   if (isLoading) return '...';
@@ -37,13 +36,13 @@ function LaunchInfo({
                 <p class="mb-4 text-base leading-relaxed">
                   {launchData.details}
                 </p>
-                <a href="#" class="inline-flex items-center font-semibold text-blue-700 md:mb-2 lg:mb-0 hover:text-blue-400" onClick={() => history.push(`/launch/${launchData.id}`)}>
+                <Link class="inline-flex items-center font-semibold text-blue-700 md:mb-2 lg:mb-0 hover:text-blue-400" to={`/launch/${launchData.id}`}>
                   Read More
                   <svg class="w-4 h-4 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                     <path fill="none" d="M0 0h24v24H0z" />
                     <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" />
                   </svg>
-                </a>
+                </Link>
               </div>
             ))
           }

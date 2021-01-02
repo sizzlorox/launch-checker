@@ -6,9 +6,9 @@ function Header() {
     <>
       <header class="text-gray-700 bg-white border-t border-b body-font">
         <div class="container flex flex-col flex-wrap p-5 mx-auto md:items-center md:flex-row ">
-          <a class="flex items-center w-40 mb-4 font-medium text-gray-900 title-font md:mb-0">
+          <p class="flex items-center w-40 mb-4 font-medium text-gray-900 title-font md:mb-0">
             Launch Checker
-          </a>
+          </p>
           <nav class="flex flex-wrap items-center justify-center ml-4 text-base">
             <Link to="/upcoming" class="mr-5 text-sm text-gray-700 rounded-xl hover:text-gray-800">
               Upcoming Launches
