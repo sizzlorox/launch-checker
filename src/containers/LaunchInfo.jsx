@@ -1,4 +1,5 @@
 import { useQuery } from 'react-query';
+import { compareDesc } from 'date-fns';
 import { utcToZonedTime, format } from 'date-fns-tz';
 import { Link, withRouter } from 'react-router-dom';
 
@@ -27,7 +28,7 @@ function LaunchInfo({
       <div class="container px-8 mx-auto py-36 lg:px-4">
         <div class="flex flex-wrap text-left">
           {
-            data && data.map(launchData => (
+            data && data.sort((a, b) => compareDesc(new Date(a.date_utc), new Date(b.date_utc))).map(launchData => (
               <div class="px-8 py-6 lg:w-1/3 md:w-full">
                 {getHeaderImage(launchData.links.flickr.original)}
                 <h2 class="mb-3 text-lg font-semibold text-gray-700 lg:text-2xl title-font">
