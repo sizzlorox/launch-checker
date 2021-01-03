@@ -9,6 +9,7 @@
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.6.0",
     "autoprefixer": "^9.8.6",
+    "axios": "^0.21.1",
     "date-fns": "^2.16.1",
     "date-fns-timezone": "^0.1.4",
     "date-fns-tz": "^1.0.12",
